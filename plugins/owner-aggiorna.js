@@ -44,7 +44,7 @@ let handler = async (m, { conn, command, usedPrefix }) => {
 ${truncate(item.stack, 3000)}
 \`\`\`
 
-> 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓`
+> 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝐎𝐓`
 
     return conn.reply(m.chat, fullMsg, m)
   }
