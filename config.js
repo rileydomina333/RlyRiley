@@ -25,7 +25,6 @@ global.owner = [
   ['5511986840185', 'Riley', true],
   ['8801794913207', 'Zexon', true],
 ]
-]
 
 global.mods = [
   'xxxxxxxxxx',
