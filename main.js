@@ -121,8 +121,8 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${authFile}/creds.json`)) 
     const whiteSoft = chalk.hex('#ECF0F1'); // Soft white
     const redSoft = chalk.hex('#E74C3C');   // Soft red
 
-        const a = cyan1('╭━━━━━━━━━━━━━• 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝐂𝐎𝐑𝐄 •━━━━━━━━━━━━━');
-    const b = cyan1('╰━━━━━━━━━━━━━• 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝐄𝐍𝐃 •━━━━━━━━━━━━━');
+        const a = cyan1('╭━━━━━━━━━━━━━• 𝛥𝐗𝐈𝚶𝐍 𝐂𝐎𝐑𝐄 •━━━━━━━━━━━━━');
+    const b = cyan1('╰━━━━━━━━━━━━━• 𝛥𝐗𝐈𝚶𝐍 𝐄𝐍𝐃 •━━━━━━━━━━━━━');
     const linea = cyan2('   ─────────◈────────◈─────────◈─────────');
     const sm = cyan3.bold('   ⚡ SISTEMA DI AUTENTICAZIONE ⚡');
 
@@ -133,7 +133,7 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${authFile}/creds.json`)) 
         cyan3(' ❯') + whiteSoft.italic(' Inizializzazione protocollo di accesso...'),
         cyan3(' ❯') + whiteSoft.italic(' Scegli un\'opzione per stabilire il link.'),
         whiteSoft.italic(''),
-        cyan1.italic('                𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝐒𝐘𝐒𝐓𝐄𝐌 • 𝐕𝟏.𝟎.𝟎'),
+        cyan1.italic('                𝛥𝐗𝐈𝚶𝐍 𝐒𝐘𝐒𝐓𝐄𝐌 • 𝐕𝟏.𝟎.𝟎'),
     ];
 
     const prompt = green.bold('\n⌬ axion-auth ➤ ');
@@ -154,7 +154,7 @@ ${b}
 ${prompt}`);
 
     if (!/^[1-2]$/.test(opzione)) {
-        console.log(`\n${redSoft.bold('✖ ERRORE DI PROTOCOLLO: 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍-𝟒𝟎𝟒')}
+        console.log(`\n${redSoft.bold('✖ ERRORE DI PROTOCOLLO: 𝛥𝐗𝐈𝚶𝐍-𝟒𝟎𝟒')}
 
 ${whiteSoft('   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')}
 ${redSoft.bold('⚠️ Input non riconosciuto dal Core.')} 
@@ -298,7 +298,7 @@ ${extra ? `*Plugin:* ${extra}\n` : ''}*Messaggio:* ${messageText}`;
 
         await global.conn.sendMessage(jid, {
             text,
-            footer: 'Infection Bot',
+            footer: 'Axion Bot',
             buttons: [
                 {
                     buttonId: `.debugplugin ${debugId}`,
@@ -354,7 +354,7 @@ if (!fs.existsSync(`./${authFile}/creds.json`)) {
                 if (!phoneNumber.startsWith('+')) phoneNumber = `+${phoneNumber}`;
             }
             setTimeout(async () => {
-                let codeBot = await conn.requestPairingCode(addNumber, 'INFECTED');
+                let codeBot = await conn.requestPairingCode(addNumber, 'AXIONBOT');
                 codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot;
                 console.log(chalk.bold.white(chalk.bgHex('#00CED1')('📞 CODICE DI ABBINAMENTO:')), chalk.bold.white(chalk.hex('#2ECC71')(codeBot)));
             }, 3000);
@@ -418,7 +418,7 @@ async function notifyRestartComplete(conn) {
 *⏱️ 𝐓𝐞𝐦𝐩𝐨 𝐝𝐢 𝐫𝐢𝐚𝐯𝐯𝐢𝐨:* ${elapsed}𝐬
 *🧾 𝐄𝐫𝐫𝐨𝐫𝐢 𝐫𝐢𝐥𝐞𝐯𝐚𝐭𝐢:* ${errors}
 
-> *𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓*`,
+> *𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓*`,
             mentions: [restartState.sender]
         });
 
@@ -486,7 +486,7 @@ global.isLogoPrinted = true;
             await global.reloadHandler(true).catch(console.error);
         } else if (reason === DisconnectReason.connectionLost) {
             if (!global.connectionMessagesPrinted.connectionLost) {
-                console.log(chalk.hex('#00CED1').bold(`\nCONNESSIONE PERSA COL SERVER\nRICONNESSIONE IN CORSO... \n𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓`));
+                console.log(chalk.hex('#00CED1').bold(`\nCONNESSIONE PERSA COL SERVER\nRICONNESSIONE IN CORSO... \n𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓`));
                 global.connectionMessagesPrinted.connectionLost = true;
             }
             await global.reloadHandler(true).catch(console.error);
