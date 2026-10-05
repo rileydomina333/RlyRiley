@@ -298,7 +298,7 @@ ${extra ? `*Plugin:* ${extra}\n` : ''}*Messaggio:* ${messageText}`;
 
         await global.conn.sendMessage(jid, {
             text,
-            footer: 'Axion Bot',
+            footer: 'Infection Bot',
             buttons: [
                 {
                     buttonId: `.debugplugin ${debugId}`,
@@ -354,7 +354,7 @@ if (!fs.existsSync(`./${authFile}/creds.json`)) {
                 if (!phoneNumber.startsWith('+')) phoneNumber = `+${phoneNumber}`;
             }
             setTimeout(async () => {
-                let codeBot = await conn.requestPairingCode(addNumber, 'INFECT');
+                let codeBot = await conn.requestPairingCode(addNumber, 'INFECTION');
                 codeBot = codeBot?.match(/.{1,4}/g)?.join("-") || codeBot;
                 console.log(chalk.bold.white(chalk.bgHex('#00CED1')('📞 CODICE DI ABBINAMENTO:')), chalk.bold.white(chalk.hex('#2ECC71')(codeBot)));
             }, 3000);
