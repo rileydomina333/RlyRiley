@@ -1,117 +1,89 @@
-// memu funzioni by Bonzino
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-import fs from 'fs'
-import fetch from 'node-fetch'
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-function stato(value) {
-  return value ? '🟢 *𝐀𝐭𝐭𝐢𝐯𝐨*' : '⚪ *𝐃𝐢𝐬𝐚𝐭𝐭𝐢𝐯𝐨*'
-}
+let handler = async (m, { conn, usedPrefix, command }) => {
+    const userId = m.sender;
+    const groupId = m.isGroup ? m.chat : null;
+    const chat = global.db.data.chats[m.chat] || {};
+    const imagePath = path.join(__dirname, '../../media/WA_1782994913707.jpeg');
 
-let handler = async (m, { conn, usedPrefix }) => {
-  const chat = global.db?.data?.chats?.[m.chat] || {}
-  const bot = global.db?.data?.settings?.[conn.user.jid] || {}
+    const botName = "ℝ𝕃𝕐 𝔹𝕆𝕋";
+    const menuText = generateMenuText(m, chat, userId, groupId, botName, usedPrefix);
+    
+    const footerText = `𝕊𝕖𝕝𝕖𝕫𝕚𝕠𝕟𝕒 𝕦𝕟𝕒 𝕔𝕒𝕥𝕖𝕘𝕠𝕣𝕚𝕒 💠`;
 
-  let pp = null
-  try {
-    pp = await conn.profilePictureUrl(m.sender, 'image')
-  } catch {}
+    await conn.sendMessage(m.chat, {
+        image: { url: imagePath },
+        caption: menuText,
+        footer: footerText,
+        buttons: [
+            { buttonId: `${usedPrefix}menu`, buttonText: { displayText: '💠 Menu Principale' }, type: 1 },
+            { buttonId: `${usedPrefix}menuadmin`, buttonText: { displayText: '💠 Menu Admin' }, type: 1 },
+            { buttonId: `${usedPrefix}menuowner`, buttonText: { displayText: '💠 Menu Owner' }, type: 1 },
+            { buttonId: `${usedPrefix}menugruppo`, buttonText: { displayText: '💠 Menu Gruppo' }, type: 1 },
+            { buttonId: `${usedPrefix}menumod`, buttonText: { displayText: '💠 Menu Mod' }, type: 1 },
+        ],
+        viewOnce: true,
+        headerType: 4,
+    }, { quoted: m });
+};
 
-  let thumbnail = null
+handler.help = ['menusicurezza'];
+handler.tags = ['menu'];
+handler.command = /^(menusicurezza|securitymenu|menusecurity|safety)$/i;
 
-  try {
-    if (pp) {
-      const res = await fetch(pp)
+export default handler;
 
-      if (res.ok) {
-        thumbnail = Buffer.from(await res.arrayBuffer())
-      }
-    }
-  } catch {}
+function generateMenuText(m, chat, userId, groupId, botName, usedPrefix) { 
+    const vs = global.vs || '1.0.0';
+    
+    const functions = {
+        "Anti Link": !!chat?.antiLink,
+        "Anti Link Hard": !!chat?.antiLinkHard,
+        "Anti Spam": !!chat?.antispam,
+        "Anti Trava": !!chat?.antitrava,
+        "Benvenuto": !!chat?.welcome,
+        "Addio": !!chat?.bye,
+        "Anti Bestemmie": !!chat?.antibestemmie,
+        "Solo Admin": !!chat?.soloadmin,
+        "Anti Porno": !!chat?.antiporno,
+        "Anti Call": !!chat?.antiCall,
+        "Anti Virus": !!chat?.antivirus,
+        "Anti Bot": !!chat?.antibot,
+        "Anti Media": !!chat?.antimedia,
+        "Anti TikTok": !!chat?.antitiktok,
+        "Anti Gore": !!chat?.antigore,       
+        "Anti Nuke": !!chat?.antinuke
+    };
 
-  if (!thumbnail) {
-    try {
-      thumbnail = fs.readFileSync('./media/default-avatar.png')
-    } catch {}
+    const statusList = Object.entries(functions)
+        .map(([name, state]) => `► ${name.padEnd(14)} | ${state ? '🟢' : '🔴'}`)
+        .join('\n');
+
+    return `
+▰▰▰▰▰▰▰▰▰▰▰▰▰▰
+    👑  ${botName}  👑
+▰▰▰▰▰▰▰▰▰▰▰▰▰▰
+
+[ PROFILO ]
+► Utente   : ${m.pushName}
+► ID       : @${userId.split('@')[0]}
+► Versione : v${vs}
+
+[ 💠 SICUREZZA & FUNZIONI ]
+► .attiva <funzione>    | Attiva funzione
+► .disabilita <funzione>| Disattiva funzione
+
+[ 🛡️ STATO ANTICHEAT ]
+${statusList}
+
+[ ℹ️ INFO ]
+► Versione : v${vs}
+
+▰▰▰▰▰▰▰▰▰▰
+   Powered by ℝ𝕃𝕐 ✨
+`.trim();
   }
-
-  const text = `╭━━━━━━━⚙️━━━━━━━╮
-*✦ 𝐀𝐗𝐈𝐎𝐍 𝐅𝐔𝐍𝐙𝐈𝐎𝐍𝐈 ✦*
-╰━━━━━━━⚙️━━━━━━━╯
-
-*🛡️ 𝐒𝐢𝐜𝐮𝐫𝐞𝐳𝐳𝐚*
-*◈ 𝐀𝐧𝐭𝐢𝐥𝐢𝐧𝐤:* ${stato(chat.antiLink)}
-*◈ 𝐀𝐧𝐭𝐢𝐬𝐩𝐚𝐦:* ${stato(chat.antispam)}
-*◈ 𝐀𝐧𝐭𝐢𝐛𝐨𝐭:* ${stato(chat.antiBot)}
-*◈ 𝐀𝐧𝐭𝐢𝐕𝐨𝐈𝐏:* ${stato(chat.antivoip)}
-*◈ 𝐀𝐧𝐭𝐢𝐖𝐡𝐚𝐭𝐬𝐀𝐩𝐩:* ${stato(chat.antiWhatsapp)}
-*◈ 𝐀𝐧𝐭𝐢𝐓𝐚𝐠:* ${stato(chat.antiTag)}
-*◈ 𝐀𝐧𝐭𝐢𝐩𝐨𝐫𝐧𝐨:* ${stato(chat.antiporno)}
-*◈ 𝐀𝐧𝐭𝐢𝐠𝐨𝐫𝐞:* ${stato(chat.antigore)}
-*◈ 𝐀𝐧𝐭𝐢𝐭𝐫𝐚𝐯𝐚:* ${stato(chat.antitrava)}
-*◈ 𝐀𝐧𝐭𝐢𝐌𝐞𝐝𝐢𝐚:* ${stato(chat.antimedia)}
-*◈ 𝐀𝐧𝐭𝐢𝐃𝐞𝐥𝐞𝐭𝐞:* ${stato(chat.antidelete)}
-*◈ 𝐀𝐧𝐭𝐢 𝐕𝐢𝐞𝐰 𝐎𝐧𝐜𝐞:* ${stato(chat.antiviewonce)}
-*◈ 𝐀𝐧𝐭𝐢𝐈𝐧𝐬𝐭𝐚:* ${stato(chat.antiInsta)}
-*◈ 𝐀𝐧𝐭𝐢𝐓𝐞𝐥𝐞𝐠𝐫𝐚𝐦:* ${stato(chat.antiTelegram)}
-*◈ 𝐀𝐧𝐭𝐢𝐓𝐢𝐤𝐓𝐨𝐤:* ${stato(chat.antiTiktok)}
-*◈ 𝐀𝐧𝐭𝐢𝐍𝐮𝐤𝐞:* ${stato(chat.antinuke)}
-
-
-*⚙️ 𝐆𝐞𝐬𝐭𝐢𝐨𝐧𝐞*
-*◈ 𝐌𝐨𝐝𝐨 𝐀𝐝𝐦𝐢𝐧:* ${stato(chat.modoadmin)}
-*◈ 𝐁𝐞𝐧𝐯𝐞𝐧𝐮𝐭𝐨:* ${stato(chat.welcome)}
-*◈ 𝐀𝐝𝐝𝐢𝐨:* ${stato(chat.goodbye)}
-*◈ 𝐏𝐫𝐞𝐬𝐞𝐧𝐭𝐚𝐳𝐢𝐨𝐧𝐞:* ${stato(chat.presentazione)}
-
-*🧠 𝐀𝐢 & 𝐀𝐮𝐭𝐨𝐦𝐚𝐳𝐢𝐨𝐧𝐞*
-*◈ 𝐈𝐀:* ${stato(chat.ai)}
-*◈ 𝐁𝐚𝐜𝐤𝐮𝐩𝐃𝐁:* ${stato(bot.autoDbBackup)}
-
-*🔒 𝐏𝐫𝐢𝐯𝐚𝐭𝐨*
-*◈ 𝐀𝐧𝐭𝐢𝐩𝐫𝐢𝐯𝐚𝐭𝐨:* ${stato(bot.antiprivato)}
-
-*──────────────*
-
-*🟢 𝐀𝐭𝐭𝐢𝐯𝐚:* *${usedPrefix}1 <funzione>*
-*⚪ 𝐃𝐢𝐬𝐚𝐭𝐭𝐢𝐯𝐚:* *${usedPrefix}0 <funzione>*`
-
-  await conn.sendMessage(
-    m.chat,
-    {
-      text,
-      footer: '𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓',
-      buttons: [
-        {
-          buttonId: `${usedPrefix}menu`,
-          buttonText: {
-            displayText: '⬅️ Menu Principale'
-          },
-          type: 1
-        }
-      ],
-      headerType: 1,
-      contextInfo: {
-        ...(global.rcanal?.contextInfo || {}),
-        ...(thumbnail
-          ? {
-              externalAdReply: {
-                title: '𝐀𝐗𝐈𝐎𝐍 𝐅𝐔𝐍𝐙𝐈𝐎𝐍𝐈',
-                body: 'Stato moduli del sistema',
-                thumbnail,
-                mediaType: 1,
-                renderLargerThumbnail: false,
-                showAdAttribution: false
-              }
-            }
-          : {})
-      }
-    },
-    { quoted: m }
-  )
-}
-
-handler.help = ['funzioni']
-handler.tags = ['group']
-handler.command = /^(funzioni|statusfunzioni|moduli)$/i
-
-export default handler
