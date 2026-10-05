@@ -1,47 +1,44 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+// memu funzioni by Bonzino
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import fs from 'fs'
+import fetch from 'node-fetch'
 
-let handler = async (m, { conn, usedPrefix, command }) => {
-    const userId = m.sender;
-    const groupId = m.isGroup ? m.chat : null;
-    const chat = global.db.data.chats[m.chat] || {};
-    const imagePath = path.join(__dirname, '../../media/WA_1782994913707.jpeg');
+function stato(value) {
+  return value ? '🟢 *𝐀𝐭𝐭𝐢𝐯𝐨*' : '⚪ *𝐃𝐢𝐬𝐚𝐭𝐭𝐢𝐯𝐨*'
+}
 
-    const botName = "ℝ𝕃𝕐 𝔹𝕆𝕋";
-    const menuText = generateMenuText(m, chat, userId, groupId, botName, usedPrefix);
-    
-    const footerText = `𝕊𝕖𝕝𝕖𝕫𝕚𝕠𝕟𝕒 𝕦𝕟𝕒 𝕔𝕒𝕥𝕖𝕘𝕠𝕣𝕚𝕒 💠`;
+let handler = async (m, { conn, usedPrefix }) => {
+  const chat = global.db?.data?.chats?.[m.chat] || {}
+  const bot = global.db?.data?.settings?.[conn.user.jid] || {}
 
-    await conn.sendMessage(m.chat, {
-        image: { url: imagePath },
-        caption: menuText,
-        footer: footerText,
-        buttons: [
-            { buttonId: `${usedPrefix}menu`, buttonText: { displayText: '💠 Menu Principale' }, type: 1 },
-            { buttonId: `${usedPrefix}menuadmin`, buttonText: { displayText: '💠 Menu Admin' }, type: 1 },
-            { buttonId: `${usedPrefix}menuowner`, buttonText: { displayText: '💠 Menu Owner' }, type: 1 },
-            { buttonId: `${usedPrefix}menugruppo`, buttonText: { displayText: '💠 Menu Gruppo' }, type: 1 },
-            { buttonId: `${usedPrefix}menumod`, buttonText: { displayText: '💠 Menu Mod' }, type: 1 },
-        ],
-        viewOnce: true,
-        headerType: 4,
-    }, { quoted: m });
-};
+  let pp = null
+  try {
+    pp = await conn.profilePictureUrl(m.sender, 'image')
+  } catch {}
 
-handler.help = ['menusicurezza'];
-handler.tags = ['menu'];
-handler.command = /^(menusicurezza|securitymenu|menusecurity|safety)$/i;
+  let thumbnail = null
 
-export default handler;
+  try {
+    if (pp) {
+      const res = await fetch(pp)
 
-function generateMenuText(m, chat, userId, groupId, botName, usedPrefix) { 
-    const vs = global.vs || '1.0.0';
-    
-    const functions = {
-        "Anti Link": !!chat?.antiLink,
+      if (res.ok) {
+        thumbnail = Buffer.from(await res.arrayBuffer())
+      }
+    }
+  } catch {}
+
+  if (!thumbnail) {
+    try {
+      thumbnail = fs.readFileSync('./media/default-avatar.png')
+    } catch {}
+  }
+
+  const text = `╭━━━━━━━⚙️━━━━━━━╮
+*✦ 𝐀𝐗𝐈𝐎𝐍 𝐅𝐔𝐍𝐙𝐈𝐎𝐍𝐈 ✦*
+╰━━━━━━━⚙️━━━━━━━╯
+
+*🛡️ "Anti Link": !!chat?.antiLink,
         "Anti Link Hard": !!chat?.antiLinkHard,
         "Anti Spam": !!chat?.antispam,
         "Anti Trava": !!chat?.antitrava,
@@ -57,33 +54,44 @@ function generateMenuText(m, chat, userId, groupId, botName, usedPrefix) {
         "Anti TikTok": !!chat?.antitiktok,
         "Anti Gore": !!chat?.antigore,       
         "Anti Nuke": !!chat?.antinuke
-    };
 
-    const statusList = Object.entries(functions)
-        .map(([name, state]) => `► ${name.padEnd(14)} | ${state ? '🟢' : '🔴'}`)
-        .join('\n');
+  await conn.sendMessage(
+    m.chat,
+    {
+      text,
+      footer: '𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓',
+      buttons: [
+        {
+          buttonId: `${usedPrefix}menu`,
+          buttonText: {
+            displayText: '⬅️ Menu Principale'
+          },
+          type: 1
+        }
+      ],
+      headerType: 1,
+      contextInfo: {
+        ...(global.rcanal?.contextInfo || {}),
+        ...(thumbnail
+          ? {
+              externalAdReply: {
+                title: '𝐀𝐗𝐈𝐎𝐍 𝐅𝐔𝐍𝐙𝐈𝐎𝐍𝐈',
+                body: 'Stato moduli del sistema',
+                thumbnail,
+                mediaType: 1,
+                renderLargerThumbnail: false,
+                showAdAttribution: false
+              }
+            }
+          : {})
+      }
+    },
+    { quoted: m }
+  )
+}
 
-    return `
-▰▰▰▰▰▰▰▰▰▰▰▰▰▰
-    👑  ${botName}  👑
-▰▰▰▰▰▰▰▰▰▰▰▰▰▰
+handler.help = ['funzioni']
+handler.tags = ['group']
+handler.command = /^(funzioni|statusfunzioni|moduli)$/i
 
-[ PROFILO ]
-► Utente   : ${m.pushName}
-► ID       : @${userId.split('@')[0]}
-► Versione : v${vs}
-
-[ 💠 SICUREZZA & FUNZIONI ]
-► .attiva <funzione>    | Attiva funzione
-► .disabilita <funzione>| Disattiva funzione
-
-[ 🛡️ STATO ANTICHEAT ]
-${statusList}
-
-[ ℹ️ INFO ]
-► Versione : v${vs}
-
-▰▰▰▰▰▰▰▰▰▰
-   Powered by ℝ𝕃𝕐 ✨
-`.trim();
-  }
+export default handler
