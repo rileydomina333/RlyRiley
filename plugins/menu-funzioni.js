@@ -32,9 +32,9 @@ let handler = async (m, { conn, usedPrefix }) => {
     } catch {}
   }
 
-  const text = `╭━━━━━━━⚙️━━━━━━━╮
-*✦ 𝐀𝐗𝐈𝐎𝐍 𝐅𝐔𝐍𝐙𝐈𝐎𝐍𝐈 ✦*
-╰━━━━━━━⚙️━━━━━━━╯
+  const text = `╭━━━━━━⚙️━━━━━━╮
+*✦ 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝐅𝐔𝐍𝐙𝐈𝐎𝐍𝐈 ✦*
+╰━━━━━━⚙️━━━━━━╯
 
 *🛡️ 𝐒𝐢𝐜𝐮𝐫𝐞𝐳𝐳𝐚*
 *◈ 𝐀𝐧𝐭𝐢𝐥𝐢𝐧𝐤:* ${stato(chat.antiLink)}
@@ -77,7 +77,7 @@ let handler = async (m, { conn, usedPrefix }) => {
     m.chat,
     {
       text,
-      footer: '𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓',
+      footer: '𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓',
       buttons: [
         {
           buttonId: `${usedPrefix}menu`,
@@ -93,7 +93,7 @@ let handler = async (m, { conn, usedPrefix }) => {
         ...(thumbnail
           ? {
               externalAdReply: {
-                title: '𝐀𝐗𝐈𝐎𝐍 𝐅𝐔𝐍𝐙𝐈𝐎𝐍𝐈',
+                title: '𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝐅𝐔𝐍𝐙𝐈𝐎𝐍𝐈',
                 body: 'Stato moduli del sistema',
                 thumbnail,
                 mediaType: 1,
