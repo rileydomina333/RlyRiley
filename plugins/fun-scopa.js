@@ -65,7 +65,7 @@ text:
 `
 
 *😏 𝐒𝐜𝐞𝐠𝐥𝐢 𝐥𝐚 𝐦𝐨𝐝𝐚𝐥𝐢𝐭à.*`,
-footer:'𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓',
+footer:'𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓',
 buttons:[
 {
 buttonId:`.scopa lentamente ${mentionTarget} ${m.sender}`,
