@@ -36,13 +36,13 @@ global.prems = [
   'xxxxxxxxxx'
 ]
 
-global.nomebot  = '𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓'
-global.nomepack = '𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓'
+global.nomebot  = '𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓'
+global.nomepack = '𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓'
 
-global.wm       = '𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓'
+global.wm       = '𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓'
 
-global.autore   = '𝕯𝖊ⱥ𝖉𝖑𝐲'
-global.dev      = '𝕯𝖊ⱥ𝖉𝖑𝐲'
+global.autore   = '𝐑𝐢𝐥𝐞𝐲'
+global.dev      = '𝐑𝐢𝐥𝐞𝐲'
 
 global.versione = pkg.version
 
