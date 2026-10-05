@@ -3,7 +3,7 @@
 import fs from 'fs'
 
 const DATA_PATH = './database/bottiglia.json'
-const footer = '> 𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓'
+const footer = '> 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓'
 
 global.bottigliaGames ||= {}
 
