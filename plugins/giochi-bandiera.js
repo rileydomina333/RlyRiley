@@ -1,4 +1,3 @@
- 
 const playAgainButtons = (userId, groupId) => [{
     name: 'quick_reply',
     buttonParamsJson: JSON.stringify({ 
@@ -10,7 +9,7 @@ const playAgainButtons = (userId, groupId) => [{
 let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPrefix, command }) => {
     const userId = m.sender;
     const groupId = m.chat;
-    
+
     const frases = [
         global.t('flagPhrase1', userId, groupId),
         global.t('flagPhrase2', userId, groupId),
@@ -30,7 +29,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
         }
 
         clearTimeout(global.bandieraGame[m.chat].timeout);
-        
+
         let skipText = global.t('flagSkipped', userId, groupId, { 
             answer: global.bandieraGame[m.chat].rispostaOriginale 
         });
@@ -43,7 +42,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
         delete global.bandieraGame[m.chat];
         return;
     }
-    
+
     if (global.bandieraGame?.[m.chat]) {
         return m.reply(global.t('flagGameActive', userId, groupId));
     }
@@ -100,7 +99,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
         { url: 'https://flagcdn.com/w320/eg.png', nome: 'Egitto' },
         { url: 'https://flagcdn.com/w320/za.png', nome: 'Sudafrica' }
     ];
-    
+
     let scelta = bandiere[Math.floor(Math.random() * bandiere.length)];
     let frase = frases[Math.floor(Math.random() * frases.length)];
 
@@ -112,7 +111,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
             caption: startCaption,
             footer: 'Rly Riley Bot'
         }, { quoted: m });
-        
+
         global.bandieraGame = global.bandieraGame || {};
         global.bandieraGame[m.chat] = {
             id: msg.key.id,
@@ -124,7 +123,7 @@ let handler = async (m, { conn, args, participants, isAdmin, isBotAdmin, usedPre
             timeout: setTimeout(async () => {
                 if (global.bandieraGame?.[m.chat]) {
                     let timeoutText = global.t('flagTimeout', userId, groupId, { answer: scelta.nome });
-                    
+
                     await conn.sendMessage(m.chat, {
                         text: timeoutText,
                         footer: 'Rly Riley Bot',
@@ -181,10 +180,10 @@ handler.before = async (m, { conn, usedPrefix, command }) => {
     const userId = m.sender;
     const groupId = m.chat;
     const game = global.bandieraGame?.[chat];
-    
+
     if (m.message && m.message.interactiveResponseMessage) {
         const response = m.message.interactiveResponseMessage;
-        
+
         if (response.nativeFlowResponseMessage?.paramsJson) {
             try {
                 const params = JSON.parse(response.nativeFlowResponseMessage.paramsJson);
@@ -209,7 +208,7 @@ handler.before = async (m, { conn, usedPrefix, command }) => {
         }
         return;
     }
-    
+
     if (!game || !m.quoted || m.quoted.id !== game.id || m.key.fromMe) return;
 
     const userAnswer = normalizeString(m.text || '');
@@ -240,28 +239,28 @@ handler.before = async (m, { conn, usedPrefix, command }) => {
             exp,
             bonus: timeBonus
         });
-        
+
         await conn.sendMessage(chat, {
             text: congratsMessage,
             footer: 'Rly Riley Bot',
             interactiveButtons: playAgainButtons(userId, groupId)
         }, { quoted: m });
         delete global.bandieraGame[chat];
-        
+
     } else if (similarityScore >= 0.6 && !game.suggerito) {
         game.suggerito = true;
         await conn.reply(chat, global.t('flagAlmostThere', userId, groupId), m);
-        
+
     } else if (game.tentativi[m.sender] >= 3) {
         let failText = global.t('flagAttemptsExhausted', userId, groupId);
-        
+
         await conn.sendMessage(chat, {
             text: failText,
             footer: 'Rly Riley Bot',
             interactiveButtons: playAgainButtons(userId, groupId)
         }, { quoted: m });
         delete global.bandieraGame[chat];
-        
+
     } else {
         game.tentativi[m.sender] = (game.tentativi[m.sender] || 0) + 1;
         const tentativiRimasti = 3 - game.tentativi[m.sender];
@@ -287,62 +286,4 @@ handler.command = /^(bandiera|flag|skipbandiera)$/i;
 handler.group = true;
 handler.register = true;
 
-export default handler;  }
-
-    const seconds = Math.floor((Date.now() - game.startTime) / 1000)
-    const baseReward = Math.floor(Math.random() * 31) + 20
-    const speedBonus = getSpeedBonus(seconds)
-    const streakBonus = getStreakBonus(user.bandieraStreak)
-    const totalReward = baseReward + speedBonus + streakBonus
-    const speedLabel = getSpeedLabel(seconds)
-
-
-    addReward(user, totalReward)
-
-await conn.sendMessage(m.chat, {
-  text: `${H}
-┃ *✅ 𝐂𝐎𝐑𝐑𝐄𝐓𝐓𝐎!*
-┃
-┃ *🏳️ 𝐁𝐚𝐧𝐝𝐢𝐞𝐫𝐚:* ${game.rispostaOriginale}
-┃ *⏱️ 𝐓𝐞𝐦𝐩𝐨:* ${seconds}𝐬
-┃ *🎖️ 𝐄𝐬𝐢𝐭𝐨:* ${speedLabel}
-┃ *💸 𝐑𝐢𝐜𝐨𝐦𝐩𝐞𝐧𝐬𝐚:* +${totalReward}€
-${F}${WM}`,
-  interactiveButtons: playAgainButtons()
-}, { quoted: m })
-
-    delete global.bandieraGame[m.chat]
-    return true
-  }
-
-  game.tentativi[m.sender] = (game.tentativi[m.sender] || 0) + 1
-  const left = MAX_TENTATIVI - game.tentativi[m.sender]
-
-  if (left <= 0) {
-    user.bandieraGiocate = (user.bandieraGiocate || 0) + 1
-    user.bandieraStreak = 0
-
-    await conn.reply(m.chat, `${H}
-┃ *🚫 𝐇𝐚𝐢 𝐟𝐢𝐧𝐢𝐭𝐨 𝐢 𝐭𝐞𝐧𝐭𝐚𝐭𝐢𝐯𝐢*
-┃
-┃ *🏳️ 𝐑𝐢𝐬𝐩𝐨𝐬𝐭𝐚:* ${game.rispostaOriginale}
-┃ *💥 𝐒𝐭𝐫𝐞𝐚𝐤 𝐚𝐳𝐳𝐞𝐫𝐚𝐭𝐚*
-${F}${WM}`, m)
-
-    return true
-  }
-
-  await conn.reply(m.chat, `${H}
-┃ *❌ 𝐒𝐛𝐚𝐠𝐥𝐢𝐚𝐭𝐨*
-┃ *📝 𝐓𝐞𝐧𝐭𝐚𝐭𝐢𝐯𝐢 𝐫𝐢𝐦𝐚𝐬𝐭𝐢:* ${left}
-${F}${WM}`, m)
-
-  return true
-}
-
-handler.help = ['bandiera', 'skipbandiera', 'indiziobandiera']
-handler.tags = ['fun']
-handler.command = /^(bandiera|skipbandiera|indiziobandiera)$/i
-handler.group = true
-
-export default handler
+export default handler;
