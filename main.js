@@ -121,8 +121,8 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${authFile}/creds.json`)) 
     const whiteSoft = chalk.hex('#ECF0F1'); // Soft white
     const redSoft = chalk.hex('#E74C3C');   // Soft red
 
-        const a = cyan1('╭━━━━━━━━━━━━━• 𝛥𝐗𝐈𝚶𝐍 𝐂𝐎𝐑𝐄 •━━━━━━━━━━━━━');
-    const b = cyan1('╰━━━━━━━━━━━━━• 𝛥𝐗𝐈𝚶𝐍 𝐄𝐍𝐃 •━━━━━━━━━━━━━');
+        const a = cyan1('╭━━━━━━━━━━━━━• 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝐂𝐎𝐑𝐄 •━━━━━━━━━━━━━');
+    const b = cyan1('╰━━━━━━━━━━━━━• 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝐄𝐍𝐃 •━━━━━━━━━━━━━');
     const linea = cyan2('   ─────────◈────────◈─────────◈─────────');
     const sm = cyan3.bold('   ⚡ SISTEMA DI AUTENTICAZIONE ⚡');
 
@@ -133,7 +133,7 @@ if (!methodCodeQR && !methodCode && !fs.existsSync(`./${authFile}/creds.json`)) 
         cyan3(' ❯') + whiteSoft.italic(' Inizializzazione protocollo di accesso...'),
         cyan3(' ❯') + whiteSoft.italic(' Scegli un\'opzione per stabilire il link.'),
         whiteSoft.italic(''),
-        cyan1.italic('                𝛥𝐗𝐈𝚶𝐍 𝐒𝐘𝐒𝐓𝐄𝐌 • 𝐕𝟏.𝟎.𝟎'),
+        cyan1.italic('                𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝐒𝐘𝐒𝐓𝐄𝐌 • 𝐕𝟏.𝟎.𝟎'),
     ];
 
     const prompt = green.bold('\n⌬ axion-auth ➤ ');
@@ -154,7 +154,7 @@ ${b}
 ${prompt}`);
 
     if (!/^[1-2]$/.test(opzione)) {
-        console.log(`\n${redSoft.bold('✖ ERRORE DI PROTOCOLLO: 𝛥𝐗𝐈𝚶𝐍-𝟒𝟎𝟒')}
+        console.log(`\n${redSoft.bold('✖ ERRORE DI PROTOCOLLO: 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍-𝟒𝟎𝟒')}
 
 ${whiteSoft('   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')}
 ${redSoft.bold('⚠️ Input non riconosciuto dal Core.')} 
@@ -418,7 +418,7 @@ async function notifyRestartComplete(conn) {
 *⏱️ 𝐓𝐞𝐦𝐩𝐨 𝐝𝐢 𝐫𝐢𝐚𝐯𝐯𝐢𝐨:* ${elapsed}𝐬
 *🧾 𝐄𝐫𝐫𝐨𝐫𝐢 𝐫𝐢𝐥𝐞𝐯𝐚𝐭𝐢:* ${errors}
 
-> *𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓*`,
+> *𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓*`,
             mentions: [restartState.sender]
         });
 
@@ -486,7 +486,7 @@ global.isLogoPrinted = true;
             await global.reloadHandler(true).catch(console.error);
         } else if (reason === DisconnectReason.connectionLost) {
             if (!global.connectionMessagesPrinted.connectionLost) {
-                console.log(chalk.hex('#00CED1').bold(`\nCONNESSIONE PERSA COL SERVER\nRICONNESSIONE IN CORSO... \n𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓`));
+                console.log(chalk.hex('#00CED1').bold(`\nCONNESSIONE PERSA COL SERVER\nRICONNESSIONE IN CORSO... \n𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓`));
                 global.connectionMessagesPrinted.connectionLost = true;
             }
             await global.reloadHandler(true).catch(console.error);
@@ -539,7 +539,7 @@ process.on('unhandledRejection', async (err) => {
     try {
         conn.ev.on('connection.update', connectionUpdate);
         conn.ev.on('creds.update', saveCreds);
-        console.log(chalk.hex('#2ECC71').bold(`𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓 connesso correttamente`));
+        console.log(chalk.hex('#2ECC71').bold(`𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓 connesso correttamente`));
     } catch (error) {
         console.error(chalk.bold.bgHex('#E74C3C')(`🥀 Errore nell'avvio del bot: ${error?.stack || error}`));
     }
@@ -722,7 +722,7 @@ setInterval(async () => {
     if (global.stopped === 'close' || !conn || !conn.user) return;
     const deleted = clearDirectory(join(__dirname, 'temp'));
     if (deleted > 0) {
-        console.log(chalk.bold.greenBright(`\n╭⭑ 🟢 PULIZIA MULTIMEDIA 🟢⭑\n┃          ${deleted} FILE NELLA CARTELLA TEMP\n┃          ELIMINATI CON SUCCESSO\n╰⭑🗑️ 𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓 ♻️⭑`));
+        console.log(chalk.bold.greenBright(`\n╭⭑ 🟢 PULIZIA MULTIMEDIA 🟢⭑\n┃          ${deleted} FILE NELLA CARTELLA TEMP\n┃          ELIMINATI CON SUCCESSO\n╰⭑🗑️ 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓 ♻️⭑`));
     }
 }, 1000 * 60 * 60);
 _quickTest().then(() => conn.logger.info(chalk.bold.magentaBright(``)));
