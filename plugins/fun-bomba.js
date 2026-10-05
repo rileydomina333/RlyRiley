@@ -72,7 +72,7 @@ async function avviaBomba(conn,chat,sender,m=null,editKey=null){
 if(bombaInCorso[chat])return false
 const durata=rand(DURATA_MIN,DURATA_MAX),scadenza=Date.now()+durata*1000
 bombaInCorso[chat]={vittima:sender,passaggi:[],storico:[],scadenza,msgKey:editKey||null,ticker:null,timer:setTimeout(()=>esplosione(chat,conn,m),durata*1000)}
-const msg={text:testoBomba(sender,durata),mentions:[sender],footer:'𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓'}
+const msg={text:testoBomba(sender,durata),mentions:[sender],footer:'𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓'}
 if(editKey)msg.edit=editKey
 const sent=await conn.sendMessage(chat,msg,m&&!editKey?{quoted:m}:{})
 bombaInCorso[chat].msgKey=editKey||sent?.key||null
@@ -169,7 +169,7 @@ text+=`\n*•* @${jid.split('@')[0]} *+${formatNumber(premio)}€*`
 }
 }
 
-await conn.sendMessage(chatId,{text,mentions,footer:'𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓',buttons:playButtons(),headerType:1})
+await conn.sendMessage(chatId,{text,mentions,footer:'𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓',buttons:playButtons(),headerType:1})
 delete bombaInCorso[chatId]
 return
 }
@@ -196,7 +196,7 @@ finale+=`\n*•* @${jid.split('@')[0]} • *+${formatNumber(premio)}€* • *+$
 
 finale+=`\n\n> *La prossima miccia potrebbe essere ancora più caotica.*`
 
-await conn.sendMessage(chatId,{text:finale,mentions,footer:'𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓',buttons:playButtons(),headerType:1})
+await conn.sendMessage(chatId,{text:finale,mentions,footer:'𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓',buttons:playButtons(),headerType:1})
 delete bombaInCorso[chatId]
 }
 
