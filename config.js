@@ -22,7 +22,7 @@ const moduleCache =
   })
 
 global.owner = [
-  ['5511986840185', 'Riley', true],
+  ['393929491354', 'Riley', true],
   ['8801794913207', 'Zexon', true],
 ]
 
