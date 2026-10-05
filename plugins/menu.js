@@ -8,7 +8,7 @@ const handler = async (message, { conn, usedPrefix = '.' }) => {
     const totalUsers = Object.keys(global.db?.data?.users || {}).length;
 
 const menuBody = `
-『 *𝚫𝐗𝐈𝐎𝐍 • 𝐌𝐄𝐍𝐔* 』
+*𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 • 𝐌𝐄𝐍𝐔*
 
 ⌬ 🚀 ${usedPrefix}*ping*
 ⌬ ⚙️ ${usedPrefix}*sistema*
@@ -18,7 +18,7 @@ const menuBody = `
 
 ⌬ • *ᴠᴇʀsɪᴏɴᴇ:* ${global.versione}
 ⌬ • *ᴜᴛᴇɴᴛɪ:* ${totalUsers}
-⌬ • *ᴅᴇᴠ:* 𝕯𝖊ⱥ𝖉𝖑𝐲 & Bonzino
+⌬ • *ᴅᴇᴠ:* 𝐑𝐢𝐥𝐞𝐲 & 𝐙𝐞𝐱𝐨𝐧
 `.trim()
 
 const buttons = [
@@ -31,7 +31,7 @@ const buttons = [
 ]
 
     await conn.sendMessage(message.chat, {
-        image: { url: './media/main-menu.jpeg' },
+        image: { url: './media/IMG-20261005-WA0143.jpg' },
         caption: menuBody,
         footer: 'sᴇʟᴇᴢɪᴏɴᴀ ᴜɴ ᴍᴏᴅᴜʟᴏ ᴅᴀʟʟ\'ɪɴᴛᴇʀғᴀᴄᴄɪᴀ',
         buttons: buttons,
