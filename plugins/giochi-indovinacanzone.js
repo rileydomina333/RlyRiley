@@ -9,7 +9,7 @@ import { execSync } from 'child_process'
 const activeGames = new Map()
 const pendingMode = new Map()
 
-const FOOTER = '𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓'
+const FOOTER = '𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓'
 const GAME_TIME = 30
 const TICK_TIME = 5
 const REWARD_MIN = 50
