@@ -87,7 +87,7 @@ let handler = async (m, { conn, text }) => {
 *💬 𝐌𝐞𝐬𝐬𝐚𝐠𝐠𝐢𝐨:* ${message}
 *🕒 𝐎𝐫𝐚𝐫𝐢𝐨:* ${time}
 
-> 𝐃𝐞𝐯 𝐛𝐲 𝐁𝐨𝐧𝐳𝐢𝐧𝐨`,
+> 𝐃𝐞𝐯 𝐛𝐲 𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍`,
         mentions: [m.sender]
       }, { quoted: m })
     } catch (e) {
