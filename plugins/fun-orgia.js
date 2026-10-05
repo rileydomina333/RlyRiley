@@ -187,7 +187,7 @@ ${mancanti > 0
 
     return conn.sendMessage(chatId,{
       text: statusText,
-      footer: '𝛥𝐗𝐈𝚶𝐍 𝚩𝚯𝐓',
+      footer: '𝐈𝐍𝐅𝐄𝐂𝐓𝐈𝐎𝐍 𝚩𝚯𝐓',
 buttons: [
   {
     buttonId: '.orgia azione_inizia',
